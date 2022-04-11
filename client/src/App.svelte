@@ -1,20 +1,26 @@
 <script>
-    import { Router, Link, Route } from "svelte-routing";
-    import Second from "./Second.svelte";
-    import WelcomePage from "./WelcomePage.svelte"
-    
-  
-    export let url = "";
-  </script>
-  
-  <Router url="{url}">
-    <nav>
-      <Link to="/">Welcome Page</Link>
-      <Link to="/Second">Second Page</Link>
-    </nav>
-    <div>
-      <Route path="/Second" component="{Second}" />
-      <Route path=""><WelcomePage/></Route>
-    </div>
-  </Router>
+  import { Router, Route } from "svelte-navigator";
+  import welcomePage from "./components/pages/welcomePage.svelte";
+  import test from "./components/pages/test.svelte";
+  import { SvelteToast } from '@zerodevx/svelte-toast'
 
+
+  // Toast styling - Notification 
+  const options = {
+    theme: {
+      "--toastBackground": "#48BB78",
+      "--toastBarBackground": "#2F855A",
+      reversed: true,
+      intro: { y: 192 },
+    },
+  };
+</script>
+
+<main>
+  <Router>
+    <!-- der skal self stå welcomepage istedet for test. det er for at vi bedre kan lave ændringer -->
+    <Route path="/" component={test} />
+    <SvelteToast {options} />
+    <Route path="/test" component={test} />
+  </Router>
+</main>
