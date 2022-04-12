@@ -11,7 +11,7 @@ if(isInDeleteMode) {
 await db.exec(`CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     username VARCHAR(80),
-    password VARCHAR(150) 
+    password VARCHAR(150)
     
 );`);
 

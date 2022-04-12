@@ -19,7 +19,7 @@
 <main>
   <Router>
     <!-- der skal self stå welcomepage istedet for test. det er for at vi bedre kan lave ændringer -->
-    <Route path="/" component={test} />
+    <Route path="/" component={welcomePage} />
     <SvelteToast {options} />
     <Route path="/test" component={test} />
   </Router>

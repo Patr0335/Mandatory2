@@ -15,9 +15,6 @@ router.post("/api/login", async (req, res) => {
     return res.send("Wrong username or password");
   }
 
-  console.log(JSON.stringify(foundUser));
-  console.log(JSON.stringify(password));
-
   //&& !req.session.loggedIn // fjernet fra linje 22
   if (foundUser.password === password) {
     req.session.loggedIn = true;
