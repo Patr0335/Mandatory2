@@ -1,25 +1,29 @@
 import { Router } from "express";
 import db from "../database/createConnection.js";
+import bcrypt from "bcrypt";
 
+const saltRounds = 12;
 const router = Router();
 
 // Login
 router.post("/api/login", async (req, res) => {
   const { username, password } = req.body;
-  const foundUser = await db.get("SELECT * FROM users WHERE username = ?", [
+  const userFound = await db.get("SELECT * FROM users WHERE username = ?", [
     username,
   ]);
 
-  if (!foundUser) {
+  if (!userFound) {
     res.status(400);
-    return res.send("Wrong username or password");
+    return res.send("User doesnt exist");
   }
 
-  //&& !req.session.loggedIn // fjernet fra linje 22
-  if (foundUser.password === password) {
+  const samePass = await bcrypt.compare(password, userFound.password);
+  
+  // if (userFound.password === password) {
+    if(samePass && !req.session.loggedIn) {
     req.session.loggedIn = true;
     req.session.username = username;
-    return res.send("You have been logged in to user: " + username);
+    return res.send("Login: " + username);
   } 
   
   else {
@@ -27,25 +31,24 @@ router.post("/api/login", async (req, res) => {
     return res.send("you messed up");
   }
 
-//   if (req.session.loggedIn) {
-//     return res.send("You are already logged in");
-//   }
 });
 
 // Signup
 router.post("/api/signup", async (req, res) => {
   const { username, password } = req.body;
 
+  const hashedPass = await bcrypt.hash(password, saltRounds);
+
   const { changes } = await db.run(
     `INSERT INTO users (username, password) VALUES (?, ?)`,
-    [username, password]
+    [username, hashedPass]
   );
 
   if (changes === 1) {
-    return res.send("You have been signed up");
+    return res.send("Signup successful");
   }
 
-  res.send("Sign up failed");
+  res.send("Signup fail");
 });
 
 // Logout
@@ -53,50 +56,10 @@ router.get("/api/logout", (req, res) => {
   if (req.session.loggedIn) {
     req.session.loggedIn = false;
     const username = req.session.username;
-    return res.send("You have been logged out from user: " + username);
+    return res.send("Logout: " + username);
   }
 
-  res.send("You are not logged in");
+  res.send("You're not logged in");
 });
-
-// // Leg med admin login siden, virker såment fint
-// router.post("/api/adminLogin", async (req, res) => {
-//     const { username, password } = req.body
-//     const foundUser = await db.get("SELECT * FROM users where username = ?", [username]);
-
-//     if(!foundUser) {
-//         return res.send("There is no such user bruh");
-//     }
-
-//     // Hvis jeg bruger res.send her, så bugger den og sender en ikke admin videre vil admin siden
-//     if(foundUser.username === username && foundUser.isAdmin === 0) {
-//         return console.log("Adgang nægtet, brugeren er ikke Admin")
-
-//     }
-
-//     if(foundUser.password === password && foundUser.isAdmin === 1) {
-//         req.session.loggedIn = true;
-//         req.session.username = username;
-//         return res.send("You have been logged in as Admin user: " + username);
-//     }
-// });
-
-// Logout
-// router.get("/api/logout", (req, res) => {
-//     if(req.session.loggedIn) {
-//         req.session.loggedIn = false;
-//         const username = req.session.username;
-//         return res.send("You have been logged out from user: " + username);
-//     }
-
-//     res.send("You are not logged in")
-// });
-
-// // Get all users (til admin side)
-// router.get("/api/users", async (req, res) => {
-//     const users = await db.all(`SELECT * FROM users`);
-
-//     res.send( { data: users } );
-// });
 
 export default router;

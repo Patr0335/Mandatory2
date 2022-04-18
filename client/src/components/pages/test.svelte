@@ -163,27 +163,7 @@
             </a>
             <div class="portfolio-caption">
               <div class="portfolio-caption-heading">
-                Reach the Hot Page on 9gag
-              </div>
-              <div class="portfolio-caption-subheading text-muted">
-                <div class="memeproduct-pos">
-                  {#each memeproducts as product}
-              
-              
-                      <div class="memeproduct-card">
-                          <div class="memeproduct-container">
-                              <h3>{product.name}</h3>
-                              <h3>{product.price} DKK</h3>
-                              <p>{product.description} </p>
-                              <!-- <button on:click={ () => addProductToBasket(product)}>Tilføj til kurv</button> -->
-                          </div>
-                      </div>
-              
-              
-                      {:else}
-                          <p>Loading.....</p>
-                  {/each}
-              </div> 
+                Reach the Hot Page on 9gag 
               </div>
             </div>
           </div>
@@ -897,7 +877,6 @@
   </div>
   <!-- Core theme JS-->
   <script>
-    window.addEventListener("DOMContentLoaded", (event) => {
       // Navbar shrink function
       var navbarShrink = function () {
         const navbarCollapsible = document.body.querySelector("#mainNav");
@@ -938,6 +917,5 @@
           }
         });
       });
-    });
   </script>
 </body>
