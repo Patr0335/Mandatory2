@@ -1,6 +1,9 @@
 import db from "./createConnection.js";
+import bcrypt from "bcrypt";
 
 const isInDeleteMode = true;
+const saltRounds = 12;
+const admin = await bcrypt.hash("1234", saltRounds);
 
 if(isInDeleteMode) {
     await db.exec(`DROP TABLE IF EXISTS users;`);
@@ -30,7 +33,8 @@ if(isInDeleteMode) {
     await db.run(`INSERT INTO memeproducts (name, price, description) VALUES ('Meme Lesson', 100, 'History meme lesson')`);
     await db.run(`INSERT INTO memeproducts (name, price, description) VALUES ('RedditMeme', 75, 'Personalized subreddit meme')`);
     await db.run(`INSERT INTO memeproducts (name, price, description) VALUES ('Donation', 25, 'Donation to Ukraine')`);
-    await db.run(`INSERT INTO users (username, password) VALUES ('patrick', '1234')`);
+    await db.run(`INSERT INTO users (username, password) VALUES ('patrick', '${admin}')`);
+    
 
 };
 
