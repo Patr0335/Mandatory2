@@ -22,8 +22,6 @@
         body: JSON.stringify(newUser),
       });
 
-      console.log(JSON.stringify(newUser));
-
       responseMessage = await res.text();
       if (res.status === 200) {
         errorMessage = "";
@@ -45,7 +43,6 @@
   }
 
   async function login() {
-    console.log("Logging in!");
     const res = await fetch(`/api/login`, {
       headers: {
         "content-type": "application/json",

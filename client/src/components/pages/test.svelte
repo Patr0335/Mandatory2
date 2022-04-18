@@ -23,21 +23,6 @@
     memeproducts = memeproductsArr;
   });
 
-
-//   // Function der tilføjer et produkt til min kurv
-//   function addProductToBasket(product) {
-
-// basket.update( storeValue => {
-//     let foundProduct = storeValue.memeproducts.find(p => p.product.id == product.id)
-//     if(foundProduct) {
-//         foundProduct.amount ++
-//     } else {
-//         storeValue.products.push({product, amount:1});
-//     }
-//     console.log(storeValue.products)
-//     return storeValue;
-// });
-// }
 </script>
 
 <body id="page-top">
