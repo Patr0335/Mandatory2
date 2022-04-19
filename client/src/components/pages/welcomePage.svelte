@@ -25,7 +25,7 @@
       responseMessage = await res.text();
       if (res.status === 200) {
         errorMessage = "";
-        toast.push("Signup was a success. You can now login"); // må jeg godt det her???
+        toast.push("Signup was a success. You can now login"); 
         setTimeout(() => {
           navigate("/", { replace: true });
         }, 1500);
@@ -53,7 +53,7 @@
     responseMessage = await res.text();
     if (res.status === 200) {
       // Only navigate if my http call is 200 (success)
-      navigate("/test", { replace: true });
+      navigate("/frontPage", { replace: true });
     }
   }
 </script>

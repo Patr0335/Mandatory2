@@ -1,7 +1,7 @@
 <script>
   import { Router, Route } from "svelte-navigator";
   import welcomePage from "./components/pages/welcomePage.svelte";
-  import test from "./components/pages/test.svelte";
+  import frontPage from "./components/pages/frontPage.svelte";
   import { SvelteToast } from '@zerodevx/svelte-toast'
 
 
@@ -18,9 +18,8 @@
 
 <main>
   <Router>
-    <!-- der skal self stå welcomepage istedet for test. det er for at vi bedre kan lave ændringer -->
     <Route path="/" component={welcomePage} />
     <SvelteToast {options} />
-    <Route path="/test" component={test} />
+    <Route path="/frontPage" component={frontPage} />
   </Router>
 </main>

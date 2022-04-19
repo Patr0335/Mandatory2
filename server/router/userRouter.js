@@ -18,8 +18,6 @@ router.post("/api/login", async (req, res) => {
   }
 
   const samePass = await bcrypt.compare(password, userFound.password);
-  
-  // && !req.session.loggedIn taget fra linje 25
 
   // if (userFound.password === password) {
     if(samePass && !req.session.loggedIn) {
