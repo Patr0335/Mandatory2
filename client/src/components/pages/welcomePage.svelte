@@ -1,7 +1,6 @@
 <script>
   import { navigate } from "svelte-navigator";
   import { toast } from "@zerodevx/svelte-toast";
-  
 
   //################################### LOGIN
 
@@ -26,8 +25,8 @@
       responseMessage = await res.text();
       if (res.status === 200) {
         errorMessage = "";
-        toast.push("Signup was a success. You can now login"); 
         setTimeout(() => {
+          toast.push("Signup was a success. You can now login");
           navigate("/", { replace: true });
         }, 1500);
       }
@@ -53,12 +52,32 @@
     });
     responseMessage = await res.text();
     if (res.status === 200) {
+      // toast.push({
+      //   component: {
+      //     src: DummyComponent, // where `src` is a Svelte component
+      //     props: {
+      //       title: "A Dummy Cookie Component",
+      //     },
+      //     sendIdTo: "toastId", // send toast id to `toastId` prop
+      //   },
+      //   dismissable: false,
+      //   initial: 0,
+      //   theme: {
+      //     "--toastPadding": "0",
+      //     "--toastMsgPadding": "0",
+      //   },
+      // });
       // Only navigate if my http call is 200 (success)
       navigate("/frontPage", { replace: true });
+    } else {
+      toast.push("User doesnt exist", {
+        theme: {
+          "--toastBackground": "#F56565",
+          "--toastBarBackground": "#C53030",
+        },
+      });
     }
   }
-
-  
 </script>
 
 <head>

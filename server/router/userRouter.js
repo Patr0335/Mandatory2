@@ -21,22 +21,27 @@ router.post("/api/login", async (req, res) => {
   const samePass = await bcrypt.compare(password, userFound.password);
 
   // if (userFound.password === password) {
-    if(samePass && !req.session.loggedIn) {
+  if (samePass && !req.session.loggedIn) {
     req.session.loggedIn = true;
     req.session.username = username;
     return res.send("Login: " + username);
-  } 
-  
-  else {
+  } else {
     res.status(401);
     return res.send("you messed up");
   }
-
 });
 
 // Signup
 router.post("/api/signup", async (req, res) => {
   const { username, password } = req.body;
+
+  const sameUser = await db.get("SELECT * FROM users WHERE username = ?", [
+    username,
+  ]);
+
+  if (sameUser) {
+    return res.status(404).send("There is already a user with that email");
+  }
 
   const hashedPass = await bcrypt.hash(password, saltRounds);
 
@@ -64,31 +69,29 @@ router.get("/api/logout", (req, res) => {
   res.send("You're not logged in");
 });
 
-
-
 function welcomeMail(username) {
   let mailTransporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-          user: 'patricksmemeshop@gmail.com',
-          pass: 'solnedgang123'
-      }
+    service: "gmail",
+    auth: {
+      user: "patricksmemeshop@gmail.com",
+      pass: "solnedgang123",
+    },
   });
-    
+
   // Text = skal indeholde password
   let mailDetails = {
-      from: 'patricksmemeshop@gmail.com',
-      to: username,
-      subject: 'Patricks Memeshop Newsletter!',
-      html:'<p> You have sucessfully made an account on patricks Memeshop! </p>'
+    from: "patricksmemeshop@gmail.com",
+    to: username,
+    subject: "Patricks Memeshop Newsletter!",
+    html: "<p> You have sucessfully made an account on patricks Memeshop! </p>",
   };
-    
-  mailTransporter.sendMail(mailDetails, function(err, data) {
-      if(err) {
-          console.log('Error Occurs');
-      } else {
-          console.log('Email sent successfully');
-      }
+
+  mailTransporter.sendMail(mailDetails, function (err, data) {
+    if (err) {
+      console.log("Error Occurs");
+    } else {
+      console.log("Email sent successfully");
+    }
   });
 }
 
