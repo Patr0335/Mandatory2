@@ -1,5 +1,6 @@
 import { Router } from "express";
 import db from "../database/createConnection.js";
+import nodemailer from "nodemailer";
 import bcrypt from "bcrypt";
 
 const saltRounds = 12;
@@ -45,6 +46,7 @@ router.post("/api/signup", async (req, res) => {
   );
 
   if (changes === 1) {
+    welcomeMail(username);
     return res.send("Signup successful");
   }
 
@@ -61,5 +63,33 @@ router.get("/api/logout", (req, res) => {
 
   res.send("You're not logged in");
 });
+
+
+
+function welcomeMail(username) {
+  let mailTransporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+          user: 'patricksmemeshop@gmail.com',
+          pass: 'solnedgang123'
+      }
+  });
+    
+  // Text = skal indeholde password
+  let mailDetails = {
+      from: 'patricksmemeshop@gmail.com',
+      to: username,
+      subject: 'Patricks Memeshop Newsletter!',
+      html:'<p> You have sucessfully made an account on patricks Memeshop! </p>'
+  };
+    
+  mailTransporter.sendMail(mailDetails, function(err, data) {
+      if(err) {
+          console.log('Error Occurs');
+      } else {
+          console.log('Email sent successfully');
+      }
+  });
+}
 
 export default router;

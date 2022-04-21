@@ -33,7 +33,7 @@ if(isInDeleteMode) {
     await db.run(`INSERT INTO memeproducts (name, price, description) VALUES ('Meme Lesson', 100, 'History meme lesson')`);
     await db.run(`INSERT INTO memeproducts (name, price, description) VALUES ('RedditMeme', 75, 'Personalized subreddit meme')`);
     await db.run(`INSERT INTO memeproducts (name, price, description) VALUES ('Donation', 25, 'Donation to Ukraine')`);
-    await db.run(`INSERT INTO users (username, password) VALUES ('patrick', '${admin}')`);
+    await db.run(`INSERT INTO users (username, password) VALUES ('patrickherfolge@gmail.com', '${admin}')`);
     
 
 };

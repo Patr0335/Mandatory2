@@ -1,6 +1,7 @@
 <script>
   import { navigate } from "svelte-navigator";
   import { toast } from "@zerodevx/svelte-toast";
+  
 
   //################################### LOGIN
 
@@ -56,6 +57,8 @@
       navigate("/frontPage", { replace: true });
     }
   }
+
+  
 </script>
 
 <head>
@@ -82,11 +85,11 @@
         <form>
           <div class="form-group">
             <!-- svelte-ignore a11y-label-has-associated-control -->
-            <label>Username</label>
+            <label>Email</label>
             <input
               type="text"
               class="form-control"
-              placeholder="Username"
+              placeholder="Email"
               bind:value={newUser.username}
             />
           </div>
@@ -117,7 +120,7 @@
         <form>
           <div class="form-group">
             <!-- svelte-ignore a11y-label-has-associated-control -->
-            <label>Sign up for our newsletter.</label>
+            <label>Signup for our newsletter.</label>
             <input type="text" class="form-control" placeholder="Email" />
           </div>
           <button type="button" class="btn btn-black" on:click={() => login()}
